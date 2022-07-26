@@ -36,7 +36,6 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --rm-dist
-          workdir: cmd/uno
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
 

@@ -4,7 +4,7 @@ Like uniq, but for logs.
 # Install
 
 ```
-go install github.com/psykhi/uno
+go install github.com/psykhi/uno@latest
 ```
 
 Or download from the [releases page](https://github.com/psykhi/uno/releases).
