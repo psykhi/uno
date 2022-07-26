@@ -5,6 +5,8 @@ Like uniq, but for logs.
 
 `go install github.com/psykhi/uno`
 
+Or download from the [releases page](https://github.com/psykhi/uno/releases).
+
 # Usage
 
 ```bash
