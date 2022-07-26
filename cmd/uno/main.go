@@ -6,18 +6,38 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/psykhi/uno/pkg/processor"
+	"log"
 	"os"
+	"strings"
 )
 
 func main() {
-	printAll := flag.Bool("all", false, "Print all lines and highlight new lines")
-	maxDiffRatio := flag.Float64("d", 0.3, "The maximum difference ratio between the input line and the other lines seen")
+	printAll := flag.Bool("all", false, "Print all lines and highlight new lines in red (if the terminal supports it)")
+	maxDiffRatio := flag.Float64("d", 0.3, "The maximum difference ratio between the input line and the other lines seen (between 0 and 1)")
 	flag.Parse()
-	fmt.Println(maxDiffRatio)
 
-	scanner := bufio.NewScanner(os.Stdin)
+	if *maxDiffRatio < 0 || *maxDiffRatio > 1 {
+		log.Fatalf("Distance ratio must be between 0 and 1")
+	}
+
+	// Read from stdin or from file
+	f := os.Stdin
+	if len(os.Args) >= 2 {
+		var err error
+		lastArg := os.Args[len(os.Args)-1]
+		if !strings.HasPrefix(lastArg, "-") {
+			f, err = os.Open(lastArg)
+			if err != nil {
+				panic(err)
+			}
+			defer f.Close()
+		}
+	}
+	scanner := bufio.NewScanner(f)
+
 	p := processor.NewProcessor(*maxDiffRatio)
 	l := processor.Line{}
+
 	for scanner.Scan() {
 		l.Input = scanner.Bytes()
 		l.IsNew = false
@@ -33,7 +53,6 @@ func main() {
 		if *printAll {
 			fmt.Printf("%s\n", l.Input)
 		}
-
 	}
 
 	if scanner.Err() != nil {
