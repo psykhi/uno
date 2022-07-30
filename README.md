@@ -64,7 +64,7 @@ To see all options, use`uno -h`
 ### -d
 
 The distance option `-d` can be used to specify how different a new line must be from the others we've seen to be deemed
-new/unique. It can take a value between `0` and `1`. The default is `0.3` (30% difference)
+new/unique. It can take a value between `0` and `1`. The default is `0.2` (20% difference)
 
 ### -all
 
@@ -73,4 +73,19 @@ To see all input lines and highlight the new ones in red, use `-all`
 ```bash
 cat my_log_file.txt | uno -all
 uno -all my_log_file.txt
+```
+
+### -p
+
+Output log patterns (numbers are replaced by `*`)
+
+```bash
+cat my_log_file.txt | uno -p
+uno -all my_log_file.txt
+
+Jun * *:*:* combo ftpd[*]: connection from * (*-*-*-*.bflony.adelphia.net) at Fri Jun * *:*:* * 
+Jun * *:*:* combo cups: cupsd shutdown succeeded
+Jul  * *:*:* combo gpm[*]: *** info [mice.c(*)]: 
+Jul  * *:*:* combo gpm[*]: imps2: Auto-detected intellimouse PS/*
+
 ```
